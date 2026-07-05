@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDEAL ULIKKAL</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #FCFBF8; /* Warm Alabaster */
+            --secondary-bg: #F4F1EA; /* Warm Greige */
+            --text-dark: #2A2A2A; /* Deep Mocha */
+            --text-light: #666666; /* Soft Gray */
+            --accent-color: #BC6C25; /* Earthy Terracotta */
+            --accent-hover: #A0591B;
+            --border-color: #E2DFD8;
+            --font-family: 'Inter', sans-serif;
+            --heading-font: 'Montserrat', sans-serif;
+            --container-padding: 0 20px;
+            --section-padding: 80px 0;
+            --header-height: 80px;
+            --box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-dark);
+            background-color: var(--primary-bg);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6, .logo, .section-title {
+            font-family: var(--heading-font);
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-bg);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            height: var(--header-height);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+                .nav-links a {
+            font-family: var(--heading-font);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease, transform 0.1s ease;
+            display: inline-block;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:active {
+            transform: scale(0.92);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-dark);
+            transition: 0.3s;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Animations */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .about-content, .stat-item, .process-step, .portfolio-card, .testimonial-card, .location-card, .contact-container {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .visible-anim {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 150px 20px;
+            text-align: center;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            background-color: var(--text-dark);
+        }
+
+        .hero-slider .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-position: center;
+            background-size: cover;
+            opacity: 0;
+            animation: advancedSlider 24s infinite ease-in-out;
+        }
+
+        .hero-slider .slide:nth-child(1) { animation-delay: 0s; }
+        .hero-slider .slide:nth-child(2) { animation-delay: 8s; }
+        .hero-slider .slide:nth-child(3) { animation-delay: 16s; }
+
+        @keyframes advancedSlider {
+            0% { opacity: 0; transform: scale(1.05) translate(0, 0); }
+            10% { opacity: 1; transform: scale(1.05) translate(0, 0); }
+            33% { opacity: 1; transform: scale(1.12) translate(-1%, -1%); }
+            43% { opacity: 0; transform: scale(1.14) translate(-1.2%, -1.2%); }
+            100% { opacity: 0; transform: scale(1.05) translate(0, 0); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(42, 42, 42, 0.75) 0%, rgba(20, 20, 20, 0.95) 100%);
+            z-index: 2;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 3;
+            animation: floatText 6s ease-in-out infinite;
+        }
+        
+        @keyframes floatText {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        /* Image Placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            border-radius: 8px;
+            font-family: var(--font-family);
+            letter-spacing: 1px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* About Section */
+        .about {
+            padding: var(--section-padding);
+            background-color: var(--primary-bg);
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1 1 500px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .about-img {
+            flex: 1 1 400px;
+            height: 350px;
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: space-between;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1 1 200px;
+            padding: 20px;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+            border-color: var(--accent-color);
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            color: var(--text-light);
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--secondary-bg);
+            height: 1000vh;
+            position: relative;
+        }
+
+        .services-sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            padding: var(--section-padding);
+        }
+
+        .services-grid {
+            display: flex;
+            overflow-x: hidden;
+            gap: 5vw;
+            padding: 20px 10vw;
+        }
+        
+        .services-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .service-card {
+            flex: 0 0 75vw;
+            display: flex;
+            flex-direction: row;
+            background-color: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: left;
+            transform: scale(0.9);
+            opacity: 0.4;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card.active-card {
+            transform: scale(1);
+            opacity: 1;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--accent-color);
+        }
+
+        .service-image {
+            flex: 1;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-family: var(--font-family);
+        }
+
+        .service-content {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .service-content .icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .service-content h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .service-content p {
+            color: var(--text-light);
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        /* How We Work Section */
+        .how-we-work {
+            padding: var(--section-padding);
+            background-color: var(--primary-bg);
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+
+        .process-step .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-right: 40px;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .process-step:hover .step-number {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .process-content {
+            background: var(--secondary-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .process-step:hover .process-content {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .process-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .process-content p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .process-steps::before { left: 20px; }
+            .process-step .step-number { width: 40px; height: 40px; font-size: 1.1rem; margin-right: 20px; }
+        }
+
+        /* Our Work Section */
+        .our-work {
+            padding: var(--section-padding);
+            background-color: var(--secondary-bg);
+        }
+
+        
+                .gallery-wrapper {
+            position: relative;
+            max-height: 700px;
+            overflow: hidden;
+            transition: max-height 0.8s ease-in-out;
+            margin-top: 40px;
+        }
+
+        .gallery-wrapper.expanded {
+            max-height: 20000px; /* Large enough to hold all images */
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(to bottom, transparent, var(--secondary-bg) 80%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 30px;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-wrapper.expanded .gallery-overlay {
+            position: relative;
+            background: transparent;
+            height: auto;
+            padding-top: 30px;
+        }
+
+        .view-all-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(222, 117, 85, 0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .view-all-btn:hover {
+            transform: translateY(-3px);
+            background-color: #c46447;
+        }
+
+        .unified-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+.gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            background-color: #222;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        
+/* Testimonials Section */
+        .testimonials {
+            padding: var(--section-padding);
+            background-color: var(--primary-bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card .client-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .testimonial-card .client-info span {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Locations Section */
+        .locations {
+            padding: var(--section-padding);
+            background-color: var(--secondary-bg);
+        }
+
+        .branches-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .branch-pill {
+            background-color: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .branch-pill:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=2000') center/cover;
+            color: white;
+            z-index: 1;
+        }
+        
+        /* Blurred background overlay for the entire section */
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.3); /* Dim the background slightly */
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+        
+        .contact .section-title {
+            color: white;
+        }
+        
+        .contact .section-title::after {
+            background-color: white;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            background: rgba(255, 255, 255, 0.15); /* Glass */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-info {
+            flex: 1 1 400px;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.05); /* Slight distinction for the info side */
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .contact-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .contact-info p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .contact-form-wrapper {
+            flex: 1 1 400px;
+            padding: 60px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255,255,255,0.4);
+            border-radius: 0;
+            font-family: var(--font-family);
+            font-size: 1.1rem;
+            color: white;
+            transition: border-color 0.3s;
+        }
+        
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-bottom-color: white;
+        }
+        
+        .contact-form input::placeholder, .contact-form textarea::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            height: 120px;
+        }
+        
+        .contact-form .btn {
+            background-color: white;
+            color: #1e293b;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-start;
+            margin-top: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .contact-form .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.3);
+        }
+
+        .form-message {
+            display: none;
+            padding: 20px;
+            background-color: rgba(16, 185, 129, 0.4);
+            color: white;
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Project Modal */
+        .project-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .project-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--primary-bg);
+            margin: 5% auto;
+            padding: 50px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 20px;
+            position: relative;
+            transform: translateY(-50px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .project-modal.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: var(--text-light);
+            font-size: 45px;
+            line-height: 1;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-size: 2.5rem;
+        }
+
+        .modal-content p {
+            color: var(--text-light);
+            margin-bottom: 40px;
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+.modal-gallery img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-bg);
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        /* Premium Enhancements */
+        .service-card, .stat-item, .process-step, .location-card, .testimonial-card, .btn {
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+        
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-color: var(--accent-color);
+        }
+        
+        .hamburger span {
+            background-color: var(--text-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .portfolio-accordion {
+                flex-direction: column;
+                height: 800px;
+            }
+            .slice-title-vertical {
+                writing-mode: horizontal-tb;
+                transform: none;
+                bottom: 20px;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-bg);
+                border-bottom: 1px solid var(--border-color);
+                padding: 20px 0;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo" style="display: flex; align-items: center;"><img src="images/logo.jpg" alt="Ideal Logo" style="height: 50px; margin-right: 12px;">IDEAL ULIKKAL</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#work">Our Work</a></li>
+                    <li><a href="#locations">Locations</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slider">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=2000');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <h1>Where design meets everyday life</h1>
+            <p>Transforming your living and working spaces into stunning, functional environments that inspire.</p>
+            <a href="#contact" class="btn">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>At IDEAL ULIKKAL, we believe in practical and functional design. We started our journey with a simple goal: to help homeowners and businesses create spaces that are comfortable, clean, and organized without unnecessary frills.</p>
+                    <p>Our team of experienced designers focuses on understanding your requirements and delivering solutions that work for you. We value transparency, standard quality materials, and timely project execution.</p>
+                    <p>Whether you're looking to refresh a single room or completely renovate your office, we bring a straightforward approach to every project we undertake.</p>
+                </div>
+                <div class="about-img" style="background: url('images/logo.jpg') center/contain no-repeat; border-radius: 8px;">
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>10000+</h3>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>13</h3>
+                    <p>Years in Business</p>
+                </div>
+                <div class="stat-item">
+                    <h3>23</h3>
+                    <p>Branches</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="services-sticky-wrapper">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/ferro_slab_1783013114168.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">01</div>
+                        <h3>Ferro Slab</h3>
+                        <p>Specialized ferro cement and concrete slab construction providing extreme durability, structural integrity, and modern aesthetic finishes.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/multiwood_1783013124056.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">02</div>
+                        <h3>Multiwood</h3>
+                        <p>High-quality multiwood solutions for moisture-resistant and durable interior cabinetry, ideal for long-lasting performance in any environment.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/marine_ply_1783013135118.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">03</div>
+                        <h3>Marine Ply</h3>
+                        <p>Premium marine-grade plywood installations offering superior water resistance and structural strength for kitchens and bathrooms.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/aluminium_1783013147604.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">04</div>
+                        <h3>Aluminium</h3>
+                        <p>Sleek and modern aluminium fabrications for doors, windows, and partitions, providing a lightweight yet sturdy architectural finish.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/modular_kitchen_1783013159778.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">05</div>
+                        <h3>Modular Kitchen</h3>
+                        <p>Beautiful and highly functional kitchen spaces designed for cooking, dining, and gathering. We focus on modern appliances and smart storage.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/fiber_cement_board_1783013168671.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">06</div>
+                        <h3>Fiber Cement Board</h3>
+                        <p>Versatile fiber cement board installations for robust interior and exterior cladding, offering fire resistance and exceptional longevity.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/gypsum_ceiling_1783013179004.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">07</div>
+                        <h3>Gypsum Ceiling</h3>
+                        <p>Elegant gypsum false ceilings designed to enhance lighting, conceal wiring, and add a touch of sophisticated luxury to any room.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/handrails_1783013190347.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">08</div>
+                        <h3>Handrails</h3>
+                        <p>Custom-crafted handrails in steel, glass, or wood, designed to provide safety while elevating the visual appeal of your staircases.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/interlock_1783013202674.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">09</div>
+                        <h3>Interlock</h3>
+                        <p>Durable and aesthetically pleasing interlocking pavement blocks for driveways, walkways, and exterior landscaping.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/gardening_1783013213857.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">10</div>
+                        <h3>Gardening</h3>
+                        <p>Professional landscape and gardening services to transform your outdoor spaces into lush, relaxing natural retreats.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/curtain_1783013228230.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">11</div>
+                        <h3>Curtain</h3>
+                        <p>Premium curtain tailoring and installation, offering a wide selection of fabrics to perfectly complement your interior décor.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: url('images/roof_tiles_1783013240729.png') center/cover;"></div>
+                    <div class="service-content">
+                        <div class="icon">12</div>
+                        <h3>Roof Tiles</h3>
+                        <p>High-quality roofing tile installations providing excellent weather protection, insulation, and a classic architectural finish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Section -->
+    <section class="how-we-work" id="process">
+        <div class="container">
+            <h2 class="section-title">How We Work</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="process-content">
+                        <h3>Initial Consultation</h3>
+                        <p>We meet with you to discuss your space, budget, and basic requirements.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="process-content">
+                        <h3>Design Proposal</h3>
+                        <p>Our team presents a standard layout and a neutral color palette for your approval.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="process-content">
+                        <h3>Material Selection</h3>
+                        <p>We help you choose durable, practical materials and furniture from our standard catalogs.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="process-content">
+                        <h3>Execution</h3>
+                        <p>Our project managers coordinate the work on-site to ensure it stays on schedule.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="process-content">
+                        <h3>Handover</h3>
+                        <p>Final walkthrough to ensure everything meets our standard quality checklist before you move in.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Work Section -->
+    <section class="our-work" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Our Work</h2>
+            <div class="gallery-wrapper">
+                <div class="unified-gallery">
+                    <div class="gallery-item"><img src="ideal pics/project-1.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-2.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-3.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-4.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-5.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-6.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-7.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-8.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-9.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-10.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-11.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-12.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-13.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-14.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-15.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-16.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-17.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-18.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-19.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-20.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-21.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-22.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-23.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-24.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-25.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-26.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-27.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-28.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-29.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-30.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-31.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-32.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-33.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-34.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-35.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-36.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-37.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-38.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-39.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-40.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-41.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-42.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-43.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-44.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-45.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-46.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-47.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-48.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-49.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-50.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-51.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-52.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-53.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-54.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-55.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-56.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-57.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-58.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-59.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-60.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-61.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-62.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-63.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-64.jpeg" alt="Project Photo" loading="lazy"></div>
+                    <div class="gallery-item"><img src="ideal pics/project-65.jpeg" alt="Project Photo" loading="lazy"></div>
+</div>
+                <div class="gallery-overlay">
+                    <button class="view-all-btn" onclick="toggleGallery()">View All Projects</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"IDEAL ULIKKAL provided exactly what we needed. A decent, clean look for our new apartment without going over budget."</p>
+                    <div class="client-info">
+                        <h4>Thomas Ulikkal</h4>
+                        <span>Project: Apartment Kitchen</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Very straightforward process. They planned our office space efficiently and got the work done on time."</p>
+                    <div class="client-info">
+                        <h4>Philip Alakode</h4>
+                        <span>Project: Standard Office Cubicles</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"I appreciate their practical approach. No unnecessary upselling, just good, standard work."</p>
+                    <div class="client-info">
+                        <h4>Roshan</h4>
+                        <span>Project: Family Bedroom</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section class="locations" id="locations">
+        <div class="container">
+            <h2 class="section-title">Our Branches</h2>
+            <div class="branches-list">
+                <span class="branch-pill">ALAKODE</span>
+                <span class="branch-pill">PERAVOOR</span>
+                <span class="branch-pill">KELAKAM</span>
+                <span class="branch-pill">MATTANUR</span>
+                <span class="branch-pill">SREEKANDAPURAM</span>
+                <span class="branch-pill">PAYYAVOOR</span>
+                <span class="branch-pill">CHEMPERI</span>
+                <span class="branch-pill">THALASSERY</span>
+                <span class="branch-pill">EDOOR</span>
+                <span class="branch-pill">ULIKKAL</span>
+                <span class="branch-pill">IRIKKUR</span>
+                <span class="branch-pill">KANNUR</span>
+                <span class="branch-pill">KASARGOD</span>
+                <span class="branch-pill">KOZHIKODE</span>
+                <span class="branch-pill">WAYANAD</span>
+                <span class="branch-pill">CHERUPUZHA</span>
+                <span class="branch-pill">KOOTHUPARAMBA</span>
+                <span class="branch-pill">CHALODE</span>
+                <span class="branch-pill">VALLITHODE</span>
+                <span class="branch-pill">BANGALORE</span>
+                <span class="branch-pill">MANGALORE</span>
+                <span class="branch-pill">VIRAJPET</span>
+                <span class="branch-pill">MYSORE</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Ready to start your dream interior design project? Reach out to us via email or phone, or simply fill out the form to start a conversation.</p>
+                    <br>
+                    <p><strong>Email:</strong> idealferroslabulikkal@gmail.com</p>
+                    <p><strong>Phone:</strong> +919745494979</p>
+                    <br>
+                    <p>Our expert design team typically responds within 1-2 business days to schedule an initial consultation.</p>
+                </div>
+                <div class="contact-form-wrapper">
+                    <div id="form-success" class="form-message">
+                        Thank you! Your message has been sent successfully. We will get back to you soon.
+                    </div>
+                    <form id="contactForm" class="contact-form">
+    <input type="text" id="name" name="name" placeholder="Full Name" required>
+
+    <input type="email" id="email" name="email" placeholder="Email Address" required>
+
+     <input type="phone" id="phone" name="phone" placeholder="Mobile Number" required>
+
+    <textarea id="message" name="message" placeholder="Tell us about your space..." required></textarea>
+
+    <button type="submit" class="btn">Send Message</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 IDEAL ULIKKAL. All rights reserved.</p>
+        <p><a href="terms.html" style="color: var(--accent-color); text-decoration: underline; font-size: 0.9rem; margin-top: 10px; display: inline-block;">Terms and Conditions</a> &nbsp;|&nbsp; <a href="privacy.html" style="color: var(--accent-color); text-decoration: underline; font-size: 0.9rem; margin-top: 10px; display: inline-block;">Privacy Policy</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Contact Form Submit
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('form-success');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent page reload
+            // In a real scenario, you'd send data to a backend here.
+            
+            // Show success message
+            contactForm.style.display = 'none';
+            formSuccess.style.display = 'block';
+        });
+
+        // Scroll Animation Observer
+        const animElements = document.querySelectorAll('.about-content, .stat-item, .process-step, .portfolio-card, .testimonial-card, .location-card, .contact-container');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible-anim');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animElements.forEach(el => observer.observe(el));
+
+        // Horizontal Scroll Animation for Service Cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        const servicesSection = document.querySelector('.services');
+        const servicesGrid = document.querySelector('.services-grid');
+
+        // Scroll mapping
+        window.addEventListener('scroll', () => {
+            const rect = servicesSection.getBoundingClientRect();
+            if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+                const scrolled = Math.abs(rect.top);
+                const totalScrollable = rect.height - window.innerHeight;
+                let progress = scrolled / totalScrollable;
+                progress = Math.max(0, Math.min(1, progress));
+                
+                const maxScrollLeft = servicesGrid.scrollWidth - servicesGrid.clientWidth;
+                servicesGrid.scrollLeft = progress * maxScrollLeft;
+            }
+        });
+
+        // Intersection observer to scale cards inside the grid
+        const serviceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active-card');
+                } else {
+                    entry.target.classList.remove('active-card');
+                }
+            });
+        }, {
+            root: servicesGrid,
+            rootMargin: '0px',
+            threshold: 0.6
+        });
+
+        serviceCards.forEach(card => serviceObserver.observe(card));
+
+        
+        function toggleGallery() {
+            const wrapper = document.querySelector('.gallery-wrapper');
+            const btn = document.querySelector('.view-all-btn');
+            wrapper.classList.toggle('expanded');
+            
+            if (wrapper.classList.contains('expanded')) {
+                btn.textContent = 'Show Less';
+            } else {
+                btn.textContent = 'View All Projects';
+                // Scroll back to the top of the portfolio section
+                document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        closeTermsModalBtn.addEventListener('click', () => {
+            termsModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    
+        // Active Nav Link on Scroll
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${current}`) {
+                    a.classList.add('active');
+                }
+            });
+        });
+
+    </script>
+   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="emailjs.js"></script>
+</body>
+</html>
